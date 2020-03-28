@@ -1,8 +1,8 @@
-<label id="example-radio-group-label">{{message}}</label>
+<label id="example-radio-group-label">{{parameter.name}}</label>
 <mat-radio-group aria-labelledby="example-radio-group-label"
                  class="example-radio-group"
                  [(ngModel)]="value">
-    <mat-radio-button (change)="select(item)" [disabled]="isDisabled(item)" class="example-radio-button" *ngFor="let item of choices" [value]="item">
-        {{item}}
+    <mat-radio-button (change)="select(item)" [disabled]="isDisabled(item)" class="example-radio-button" *ngFor="let item of parameter.parameterValues" [value]="item">
+        {{item.name}}
     </mat-radio-button>
 </mat-radio-group>

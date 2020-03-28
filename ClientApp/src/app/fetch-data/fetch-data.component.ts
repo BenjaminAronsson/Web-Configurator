@@ -11,28 +11,36 @@ export class FetchDataComponent {
   public product: Product = {
     id: 5,
     name: "Elevator",
-    //parameters: null,
-    //rules: null,
+    parameters: [
+      {
+        id: 1,
+        name: "Power supply",
+        parameterValues: [
+          {
+            id: 77,
+            name: "220V"
+          },
+          {
+            id: 78,
+            name: "230V"
+          },
+          {
+            id: 79,
+            name: "240V"
+          },
+          {
+            id: 80,
+            name: "250V"
+          },
+          {
+            id: 81,
+            name: "260V"
+          }
+        ],
+      },
+    ],
   } 
-  // public product: Product = {
-  //   id: 2312412,
-  //   name: "Elevator",
-  //   parametrar: [
-  //     {
-  //       namn: "el",
-  //       values: [
-  //         {
-  //           id: 123124,
-  //           namn: "220V"
-  //         },
-  //         {
-  //           id: 4444,
-  //           namn: "240V"
-  //         },
-  //       ]
-  //     }
-  //   ]
-  // }
+ 
   public products: Product[] = [this.product];
 
 

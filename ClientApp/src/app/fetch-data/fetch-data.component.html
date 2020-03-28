@@ -3,15 +3,21 @@
 <p>This component demonstrates fetching data from the server.</p>
 
 <p *ngIf="!products"><em>Loading...</em></p>
-<picker-component></picker-component>
 
 <!--  byt input till  *ngfor minPararameter och skicka in en parameter till varje component -->
+test start ---------------
+<br>
+<p>{{product.name}}</p>
+<picker-component *ngFor="let parameter of product.parameters" (selected)="onSelected($event)" [parameter]="parameter"></picker-component>
 
-<picker-component (selected)="onSelected($event)" message="Lift type" [choices]="products"></picker-component>
+test slut ----------------
+<br>
+<br>
+<!-- <picker-component (selected)="onSelected($event)" message="Lift type" [choices]="products.parameter"></picker-component> -->
 
-<picker-component (selected)="onSelected($event)" message="Outdoor" [choices]="outdoors"></picker-component>
+<!-- <picker-component (selected)="onSelected($event)" message="Outdoor" [choices]="outdoors"></picker-component> -->
 
-<picker-component (selected)="onSelected($event)" message="Power supply" [choices]="powerSupplys"></picker-component>
+<!-- <picker-component (selected)="onSelected($event)" message="Power supply" [choices]="powerSupplys"></picker-component> -->
 
-<picker-component (selected)="onSelected($event)" message="Country of installation" [choices]="countries"></picker-component>
+<!-- <picker-component (selected)="onSelected($event)" message="Country of installation" [choices]="countries"></picker-component> -->
 

@@ -7,6 +7,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class PickerComponent {
 
+  @Input() parameter: Parameter;
+
+
   @Input() choices: string[];
   @Input() message: string;
   //@Input() isDisabled = false;
