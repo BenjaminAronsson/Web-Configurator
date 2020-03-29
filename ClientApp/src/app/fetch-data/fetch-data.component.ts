@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-fetch-data',
@@ -40,8 +41,6 @@ export class FetchDataComponent {
       },
     ],
   } 
- 
-  public products: Product[] = [this.product];
 
 
 
@@ -52,16 +51,42 @@ export class FetchDataComponent {
   }
 
   //array, value, title;
-  public outdoors: string[] = ["Yes", "No"];
-  public types: number[] = [4000, 6000, 7000, 9000];
-  public powerSupplys: string[] = ["230V, 1-Phase, 50Hz", "230V, 3-Phase, 60Hz", "380V, 3-Phase, 60Hz", "400V, 3-Phase, 50Hz"];
-  public countries: string[] = ["Austria", "Netherlands", "Sweden", "United States", "Taiwan"];
+  // public outdoors: string[] = ["Yes", "No"];
+  // public types: number[] = [4000, 6000, 7000, 9000];
+  // public powerSupplys: string[] = ["230V, 1-Phase, 50Hz", "230V, 3-Phase, 60Hz", "380V, 3-Phase, 60Hz", "400V, 3-Phase, 50Hz"];
+  // public countries: string[] = ["Austria", "Netherlands", "Sweden", "United States", "Taiwan"];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Product[]>(baseUrl + 'weatherforecast').subscribe(result => {
-      this.products = result;
+    http.get<Product>(baseUrl + 'weatherforecast').subscribe(result => {
+      this.product = result;
     }, error => console.error(error));
   }
+
+
+
+  /******************************************************************************************************************************** */
+  // constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
+
+
+  // ngOnInit() {
+  //   this.api.getSuppliers()
+  //   .subscribe(res => {
+  //     this.data = res;
+  //     console.log(this.data);
+  //     this.isLoadingResults = false;
+  //   }, err => {
+  //     console.log(err);
+  //     this.isLoadingResults = false;
+  //   });
+  // }
+  // getSupplierDetails(id) {
+  //   this.api.getSupplier(id)
+  //     .subscribe(data => {
+  //       this.supplier = data;
+  //       console.log(this.supplier);
+  //       this.isLoadingResults = false;
+  //     });
+  // }
 }
 
 
@@ -69,24 +94,24 @@ export class FetchDataComponent {
 /*********************************** regler  *************************/
 
 /* en regel har ett namn*/
-interface DisallowedRule {
-  ObjectID: number;
-  Name: string;
-}
+// interface DisallowedRule {
+//   ObjectID: number;
+//   Name: string;
+// }
 
-/* regeln indikerar vilken parameter som inter får väljas */
-interface DisallowedParameter {
-  ObjectID: number;
-  DisallowedRuleID: number; /*(references the ObjectID of a DisallowedRule)*/
-  ParameterID: number; /*(references the ObjectID of a Parameter)*/
-}
+// /* regeln indikerar vilken parameter som inter får väljas */
+// interface DisallowedParameter {
+//   ObjectID: number;
+//   DisallowedRuleID: number; /*(references the ObjectID of a DisallowedRule)*/
+//   ParameterID: number; /*(references the ObjectID of a Parameter)*/
+// }
 
-/* innehåller det förbjudna värdet och vilken parameter den hör till */
-interface DisallowedValue {
-  ObjectID: number;
-  DisallowedParameterID: number; /*(references the ObjectID of a DisallowedParameter)*/
-  ParameterValueID: number; /*(references the ObjectID of a ParameterValue)*/
-}
+// /* innehåller det förbjudna värdet och vilken parameter den hör till */
+// interface DisallowedValue {
+//   ObjectID: number;
+//   DisallowedParameterID: number; /*(references the ObjectID of a DisallowedParameter)*/
+//   ParameterValueID: number; /*(references the ObjectID of a ParameterValue)*/
+// }
 
 
 

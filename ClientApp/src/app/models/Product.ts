@@ -1,4 +1,4 @@
-interface Product {
+class Product {
     id: number;
     name: string;
     parameters: Parameter[];
@@ -19,11 +19,11 @@ interface ParameterValues {
 interface Rule {
     id: number,
     name: string,
-    ParameterId1: number,
-    ParameterId2: number,
+    parameterId1: number,
+    parameterId2: number,
 
-    ParameterValueId1: number,
-    ParameterValueId2: number,
+    parameterValueId1: number,
+    parameterValueId2: number,
 }
 
 //lista med alla parametrar

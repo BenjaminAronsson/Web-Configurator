@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyWebApp.Models;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+
+using MyWebApp.Models;
+using MyWebApp.Repositories;
 
 namespace MyWebApp
 {
@@ -23,6 +26,11 @@ namespace MyWebApp
         {
             services.AddDbContext<ConfiguratorSampleContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SQLConnection")));
             services.AddCors();
+
+            //map db object to dto
+            services.AddAutoMapper();
+
+            services.AddScoped(typeof(IDataRepository < > ), typeof(DataRepository < > ));
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
