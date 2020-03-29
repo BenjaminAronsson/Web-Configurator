@@ -1,13 +1,15 @@
+import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-//import { Product } from './models/Product';
+import { Product } from './models/Product';
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 const apiUrl = 'http://localhost:5000/api/';
 
+@Injectable()
 export class ApiService {
 
   constructor(private http: HttpClient) { }
@@ -23,8 +25,9 @@ export class ApiService {
     };
   }
 
-  getProducts (): Observable<Product[]> {
-    return this.http.get<Product[]>(apiUrl)
+  getProducts(): Observable<Product[]> {
+    const url = `${apiUrl}Product`;
+    return this.http.get<Product[]>(url)
       .pipe(
         tap(heroes => console.log('fetched Productss')),
         catchError(this.handleError('getProducts', []))
@@ -32,7 +35,7 @@ export class ApiService {
   }
   
   getProduct(id: number): Observable<Product> {
-    const url = `${apiUrl}/${id}`;
+    const url = `${apiUrl}${id}`;
     return this.http.get<Product>(url).pipe(
       tap(_ => console.log(`fetched Product id=${id}`)),
       catchError(this.handleError<Product>(`getProduct id=${id}`))

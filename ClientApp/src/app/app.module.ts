@@ -10,9 +10,12 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { PickerComponent } from './picker/picker.component';
+
 import { MatSliderModule } from '@angular/material';
 import {  MatRadioModule } from '@angular/material';
 
+import { ApiService } from './api.service'
+import { Product } from './models/Product';
 
 
 @NgModule({
@@ -25,8 +28,8 @@ import {  MatRadioModule } from '@angular/material';
     PickerComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     FormsModule,
     MatSliderModule,
     MatRadioModule,
@@ -37,7 +40,8 @@ import {  MatRadioModule } from '@angular/material';
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

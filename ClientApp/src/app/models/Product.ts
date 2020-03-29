@@ -1,29 +1,29 @@
-class Product {
+export class Product {
     id: number;
     name: string;
     parameters: Parameter[];
     rules?: Rule[]
 }
 
-interface Parameter {
-    id: number,
-    name: string,
-    parameterValues: ParameterValues[],
+export class Parameter {
+    id: number;
+    name: string;
+    parameterValues: ParameterValues[];
 }
 
-interface ParameterValues {
-    id: number,
-    name: string
+export class ParameterValues {
+    id: number;
+    name: string;
 }
 
-interface Rule {
-    id: number,
-    name: string,
-    parameterId1: number,
-    parameterId2: number,
+export class Rule {
+    id: number;
+    name: string;
+    parameterId1: number;
+    parameterId2: number;
 
-    parameterValueId1: number,
-    parameterValueId2: number,
+    parameterValueId1: number;
+    parameterValueId2: number;
 }
 
 //lista med alla parametrar

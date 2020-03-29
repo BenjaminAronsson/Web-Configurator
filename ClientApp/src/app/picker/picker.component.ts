@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Parameter } from '../models/Product'
 
 @Component({
   selector: 'picker-component',
