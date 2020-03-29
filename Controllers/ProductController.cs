@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using MyWebApp.Models;
+using MyWebApp.Repositories;
 
 namespace MyWebApp.Controllers
 {
@@ -14,11 +16,18 @@ namespace MyWebApp.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ConfiguratorSampleContext _context;
+        private readonly IMapper _mapper;
+        private readonly IDataRepository<Product> _repo;
 
-        public ProductController(ConfiguratorSampleContext context)
+       
+
+        public ProductController(ConfiguratorSampleContext context, IMapper mapper, IDataRepository<Product> repo)
         {
             _context = context;
+            _mapper = mapper;
+            _repo = repo;
         }
+        
 
         // GET: api/Product
         [HttpGet]
