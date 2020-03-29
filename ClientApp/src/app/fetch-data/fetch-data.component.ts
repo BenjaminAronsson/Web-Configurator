@@ -69,14 +69,14 @@ export class FetchDataComponent {
   /*************************************//******************************************************************************************* */
   constructor(private api: ApiService) {}
   //constructor(private route: ActivatedRoute, private api: ApiService, private router: Router) { }
-  data: Product[] = [];
+  id: number = 1;
   isLoadingResults = true;
 
   ngOnInit() {
-    this.api.getProducts()
+    this.api.getProduct(this.id)
     .subscribe(res => {
-      this.data = res;
-      console.log(this.data);
+      this.product = res;
+      console.log(res);
       this.isLoadingResults = false;
     }, err => {
       console.log(err);

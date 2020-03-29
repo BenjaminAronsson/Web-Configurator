@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MyWebApp.DTOs
 {
@@ -8,7 +9,7 @@ namespace MyWebApp.DTOs
 
         public string name { get; set; }
 
-        public ParameterValueResponse parameterValues { get; set; }
+        public IEnumerable<ParameterValueResponse> parameterValues { get; set; }
 
     }
 }

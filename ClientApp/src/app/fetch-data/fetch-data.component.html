@@ -5,18 +5,12 @@
   But COMBINUM doesn't stop there. You can also import child configurations from other systems. When child configurations are imported COMBINUM checks for rule conflicts and if found solves them automatically.
 </p>
 
-<p *ngIf="!products"><em>Loading...</em></p>
+<p *ngIf="!product"><em>Loading...</em></p>
 
-<!--  byt input till  *ngfor minPararameter och skicka in en parameter till varje component -->
-test start ---------------
-<br>
-<p>Configuring {{product.name}}</p>
+<h4>Configuring {{product.name}}</h4>
 <p *ngFor="let item of data">{{item.name}}</p>
 
 <picker-component *ngFor="let parameter of product.parameters" (selected)="onSelected($event)" [parameter]="parameter"></picker-component>
 
-test slut ----------------
-<br>
-<br>
 
 

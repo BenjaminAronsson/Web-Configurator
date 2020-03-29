@@ -8,8 +8,8 @@ namespace MyWebApp.Helpers
     {
         public AutoMapperProfiles()
         {
-            //CreateMap<AddSupplierDto, Suppliers>();
-            //CreateMap<EditSupplierDto, Suppliers>();
+            //CreateMap<AddProductDto, Product>();
+            //CreateMap<EditProductDto, Product>();
             CreateMap<Product, ProductResponse>();
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MyWebApp.DTOs;
 
 namespace MyWebApp.DTOs
@@ -8,9 +9,9 @@ namespace MyWebApp.DTOs
 
         public string name { get; set; }
 
-        public ParameterResponse parameters { get; set; }
+        public IEnumerable<ParameterResponse> parameters { get; set; }
 
-        public RuleResponse rules { get; set; }
+        public IEnumerable<RuleResponse> rules { get; set; }
 
     }
 }

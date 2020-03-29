@@ -35,7 +35,7 @@ export class ApiService {
   }
   
   getProduct(id: number): Observable<Product> {
-    const url = `${apiUrl}${id}`;
+    const url = `${apiUrl}product/${id}`;
     return this.http.get<Product>(url).pipe(
       tap(_ => console.log(`fetched Product id=${id}`)),
       catchError(this.handleError<Product>(`getProduct id=${id}`))

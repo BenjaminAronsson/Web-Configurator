@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MyWebApp.Models;
 using MyWebApp.Repositories;
+using MyWebApp.DTOs;
+using MyWebApp.Builders;
 
 namespace MyWebApp.Controllers
 {
@@ -45,14 +47,59 @@ namespace MyWebApp.Controllers
                 return BadRequest(ModelState);
             }
 
+            //populate product
             var product = await _context.Product.FindAsync(id);
-
             if (product == null)
             {
                 return NotFound();
             }
 
-            return Ok(product);
+           //retunera productResponse istället för produkt
+            var parameter = await _context.Parameter.FindAsync(product.ObjectId);
+           
+           
+           
+            product.Name = "Manupulerat objekt";
+            System.Console.WriteLine(product);
+            
+            var paramNames = new string[] {"Power", "Location"};
+
+            var productResponse = new ProductResponse();
+            productResponse.id = product.ObjectId;
+            productResponse.name = product.Name;
+
+            ParameterValueResponse dummyValue = new ParameterValueResponse {
+                id = 33,
+                name = "Val 1"
+            };
+
+            var parameters = new ParameterResponse[paramNames.Length];
+           
+            for(int j = 0; j < paramNames.Length; j++) {
+                
+                var values = new ParameterValueResponse[6];
+                var paramName = paramNames[j];
+                for(int i = 0; i < values.Length; i++) {
+                    values[i] = new ParameterValueResponse {
+                        id = 33 + i,
+                        name = paramName + " " + (i + 1),
+                    };
+                }
+
+                parameters[j] = new ParameterResponse {
+                    id = 5 + j,
+                    name = paramName,
+                    parameterValues = values,
+                };
+            }
+
+            var response = ProductBuilder.start()
+            .WithProductId(product.ObjectId)
+            .WithProductName(product.Name)
+            .WithProductParameters(parameters)
+            .Build();
+
+            return Ok(response);
         }
 
         // PUT: api/Product/5
