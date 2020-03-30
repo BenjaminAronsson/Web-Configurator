@@ -10,7 +10,7 @@ namespace MyWebApp.DTOs
         public string name { get; set; }
 
         //theese alternative can't go together
-        public ParameterValue[] incompatableValues { get; set; }
+        public ParameterValueResponse[] incompatableValues { get; set; }
 
     }
 }

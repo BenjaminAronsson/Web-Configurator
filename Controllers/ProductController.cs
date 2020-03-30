@@ -100,7 +100,7 @@ namespace MyWebApp.Controllers
                             .ToArrayAsync();
                         
                         //add values
-                        var incompatableValues = new List<ParameterValue>();
+                        var incompatableValues = new List<ParameterValueResponse>();
 
 
                         //fetch name
@@ -118,16 +118,16 @@ namespace MyWebApp.Controllers
                         //     });     
                         // }
 
-                            incompatableValues.Add( new ParameterValue{
-                                 ObjectId = 1,
-                                 ParameterId = 1,
-                                 Name = null,
+                            incompatableValues.Add( new ParameterValueResponse{
+                                 id = 1,
+                                 parameterId = 1,
+                                 name = null,
                           });
                         
-                            incompatableValues.Add( new ParameterValue{
-                                 ObjectId = 2,
-                                 ParameterId = 2,
-                                 Name = null,
+                            incompatableValues.Add( new ParameterValueResponse{
+                                 id = 6,
+                                 parameterId = 2,
+                                 name = null,
                           });
 
                         //creating rule response

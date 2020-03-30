@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Parameter } from '../models/Product'
+import { Parameter, ParameterValues } from '../models/Product'
 
 @Component({
   selector: 'picker-component',
@@ -12,19 +12,16 @@ export class PickerComponent {
 
 
   @Input() choices: string[];
-  @Input() message: string;
-  //@Input() isDisabled = false;
+  @Input() parameterValue: ParameterValues;
+  @Input() disabledOptions: number[] = []; 
 
   @Output() selected = new EventEmitter<string>();
   
+  isDisabled(valueId: number): boolean {
+    return this.disabledOptions.includes(valueId);
+  }
 
   select(item: string) {
     this.selected.emit(item);
-  }
-
-  isDisabled(item: string): boolean {
-    //when object is in not allowed
-    
-    return item.length < 4;
   }
 }

@@ -6,6 +6,8 @@ namespace MyWebApp.DTOs
     {
         public int id { get; set; }
 
+        public int parameterId { get; set; }
+
         public string name { get; set; }
     }
 }

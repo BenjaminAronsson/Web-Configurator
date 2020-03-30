@@ -2,7 +2,7 @@
 <mat-radio-group aria-labelledby="example-radio-group-label"
                  class="example-radio-group"
                  [(ngModel)]="value">
-    <mat-radio-button (change)="select(item)" [disabled]="isDisabled(item)" class="example-radio-button" *ngFor="let item of parameter.parameterValues" [value]="item">
+    <mat-radio-button (change)="select(item)" [disabled]="isDisabled(item.id)" class="example-radio-button" *ngFor="let item of parameter.parameterValues" [value]="item.id">
         {{item.name}}
     </mat-radio-button>
 </mat-radio-group>
