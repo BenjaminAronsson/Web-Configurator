@@ -57,9 +57,6 @@ namespace MyWebApp.Controllers
            //retunera productResponse istället för produkt
             var parameter = await _context.Parameter.FindAsync(product.ObjectId);
            
-           
-           
-            product.Name = "Manupulerat objekt";
             System.Console.WriteLine(product);
             
             var paramNames = new string[] {"Power", "Location"};
