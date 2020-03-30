@@ -19,6 +19,8 @@ export class ParameterValues {
 export class Rule {
     id: number;
     name: string;
+
+    //[...(parameter1, value1)]
     parameterId1: number;
     parameterId2: number;
 
@@ -39,14 +41,6 @@ export class Rule {
 
 
 //lista med regler 
-
-//interface regel {
-    //parameter1 && värde1 retunerar parameter2 och värde2
-      
-  //}
-  
-  /* Antagligen hör detta till backend */
-  
   
   /* en parameter har ett namn och vilken produkt den är kopplad till*/
 //   interface Parameter {

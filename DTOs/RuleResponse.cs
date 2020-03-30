@@ -1,4 +1,5 @@
 using System;
+using MyWebApp.Models;
 
 namespace MyWebApp.DTOs
 {
@@ -8,13 +9,8 @@ namespace MyWebApp.DTOs
 
         public string name { get; set; }
 
-        public int parameterId1 { get; set; }
-        public int parameterId2 { get; set; }
-
-        public int parameterValue1 { get; set; }
-        public int parameterValue2 { get; set; }
-
-
+        //theese alternative can't go together
+        public ParameterValue[] incompatableValues { get; set; }
 
     }
 }

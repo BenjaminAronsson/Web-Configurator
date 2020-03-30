@@ -1,3 +1,4 @@
+using System.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,41 @@ namespace MyWebApp.Controllers
             return parameters;
        }
 
+
+        async Task<IEnumerable<RuleResponse>> getRulesForParameters(int[] parameterIds)
+        {
+            var rules = new List<RuleResponse>(); 
+
+            //fetch all rules for the used each parameter
+            var disallowedParameters = new List<DisallowedParameter>();
+            foreach (var parameterId in parameterIds)
+            {
+                var fetchedRules = await _context.DisallowedParameter
+                    .Where(rule => rule.ParameterId == parameterId)
+                    .ToListAsync();
+
+                disallowedParameters.AddRange(fetchedRules);
+            }
+            
+            //remove all that does not conflict
+            //convert to response
+            foreach (var disallowedParameter in disallowedParameters) {
+                var fetchedRuleName = await _context.DisallowedRule
+                    .Where(rules => rules.ObjectId == disallowedParameter.DisallowedRuleId)
+                    .FirstAsync();
+                
+                
+                var rule = new RuleResponse{
+                    id = 1, 
+                    name = fetchedRuleName.Name,
+                    incompatableValues = null,
+                };
+
+
+                rules.Add(rule);
+            }
+            return rules;
+        }
         public ProductController(ConfiguratorSampleContext context, IMapper mapper, IDataRepository<Product> repo)
         {
             _context = context;
@@ -94,16 +130,22 @@ namespace MyWebApp.Controllers
             //get parameters
             var parameters = await getParametersForProduct(product.ObjectId);
            
-            //hämta alla regler med objectid = produkt.id            
+            var parameterIds = new List<int>();
+            parameters.ToList().ForEach(parameter =>  parameterIds.Add(parameter.id));
+
+            //get all rules for product
+            var rules = await getRulesForParameters(parameterIds.ToArray());  
 
             var response = ProductBuilder.start()
             .WithProductId(product.ObjectId)
             .WithProductName(product.Name)
             .WithProductParameters(parameters)
+            .WithProductRules(rules)
             .Build();
 
             return Ok(response);
         }
+
 
         // PUT: api/Product/5
         [HttpPut("{id}")]

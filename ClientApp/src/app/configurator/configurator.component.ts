@@ -40,7 +40,7 @@ export class ConfiguratorComponent {
 
 /*********************************** regler  *************************/
 
-/* en regel har ett namn*/
+/* en regel har en beskrivning*/
 // interface DisallowedRule {
 //   ObjectID: number;
 //   Name: string;
@@ -60,13 +60,5 @@ export class ConfiguratorComponent {
 //   ParameterValueID: number; /*(references the ObjectID of a ParameterValue)*/
 // }
 
-
-
-//   // constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-//   //   http.get<Products[]>(baseUrl + 'weatherforecast').subscribe(result => {
-//   //     this.products = result;
-//   //   }, error => console.error(error));
-//   // }
-// }
 
 
