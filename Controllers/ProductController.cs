@@ -22,6 +22,42 @@ namespace MyWebApp.Controllers
         private readonly IDataRepository<Product> _repo;
 
        
+       async Task<IEnumerable<ParameterResponse>> getParametersForProduct(int productId) {
+
+            //fetch all parameters for product
+            var fetchedParameters = await _context.Parameter.Where(p => p.ProductId == productId).ToListAsync();
+            var parameters = new ParameterResponse[fetchedParameters.Count];
+
+            for (int j = 0; j <fetchedParameters.Count; j++)
+            {
+                var parameter = fetchedParameters[j];
+
+                System.Console.WriteLine("Parameter: {0}", parameter.Name); 
+                //fetch all values for parameter
+                var fetchedParametersValues = await _context.ParameterValue.Where(p => p.ParameterId == parameter.ObjectId).ToListAsync();
+                
+                //add all values to parameter
+                var values = new ParameterValueResponse[fetchedParametersValues.Count];
+                for(int i = 0; i < fetchedParametersValues.Count; i++)
+                {
+                    var value = fetchedParametersValues[i];
+                    System.Console.WriteLine("   {0}", value.Name); 
+                    
+                    values[i] = ( new ParameterValueResponse {
+                        id = value.ObjectId,
+                        name = value.Name,
+                    });
+                }
+
+                //populate parameter with value
+                parameters[j] = (new ParameterResponse {
+                    id = parameter.ObjectId,
+                    name = parameter.Name,
+                    parameterValues = values,
+                });
+            }
+            return parameters;
+       }
 
         public ProductController(ConfiguratorSampleContext context, IMapper mapper, IDataRepository<Product> repo)
         {
@@ -54,41 +90,11 @@ namespace MyWebApp.Controllers
                 return NotFound();
             }
 
-           //retunera productResponse istället för produkt
-            var parameter = await _context.Parameter.FindAsync(product.ObjectId);
-           
-            System.Console.WriteLine(product);
             
-            var paramNames = new string[] {"Power", "Location"};
-
-            var productResponse = new ProductResponse();
-            productResponse.id = product.ObjectId;
-            productResponse.name = product.Name;
-
-            ParameterValueResponse dummyValue = new ParameterValueResponse {
-                id = 33,
-                name = "Val 1"
-            };
-
-            var parameters = new ParameterResponse[paramNames.Length];
+            //get parameters
+            var parameters = await getParametersForProduct(product.ObjectId);
            
-            for(int j = 0; j < paramNames.Length; j++) {
-                
-                var values = new ParameterValueResponse[6];
-                var paramName = paramNames[j];
-                for(int i = 0; i < values.Length; i++) {
-                    values[i] = new ParameterValueResponse {
-                        id = 33 + i,
-                        name = paramName + " " + (i + 1),
-                    };
-                }
-
-                parameters[j] = new ParameterResponse {
-                    id = 5 + j,
-                    name = paramName,
-                    parameterValues = values,
-                };
-            }
+            //hämta alla regler med objectid = produkt.id            
 
             var response = ProductBuilder.start()
             .WithProductId(product.ObjectId)
