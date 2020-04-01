@@ -1,7 +1,7 @@
-import { Component, Inject, Input, Output , EventEmitter} from '@angular/core';
+import { Component, Output , EventEmitter} from '@angular/core';
 import { ApiService } from '../api.service';
 import { Product, Rule, Parameter, ParameterValues } from '../models/Product'
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-configurator',
@@ -11,7 +11,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class ConfiguratorComponent {
 
-  
   public product: Product = new Product();  
   
   onSelected(value: ParameterValues) {
@@ -22,40 +21,20 @@ export class ConfiguratorComponent {
     this.selectedValues = temp;
 
     //update and disable options
-    //console.log("Update, not implemented", value, this.selectedItValues);
     this.updateParameters.emit(null)
   }
 
   @Output() updateParameters = new EventEmitter();
 
-  testParam: ParameterValues = {
-    parameterId: 1,
-    id: 1,
-    name: null
-  }
-
   //update on press
-  selectedValues: ParameterValues[] = [];//[this.testParam];
+  selectedValues: ParameterValues[] = [];
 
   disabledOptions(parameter: Parameter): number[] {
     
     //disalowed values
     var disAllowed: number[] = [];
     
-    //test
-    // if(parameter.id != 1) {
-    //   return disAllowed;
-    // }
 
-    console.log(parameter.name);
-    
-
-    
-    
-    
-    
-    
-    
     //test all rules 
     this.rules.forEach((rule) => {  
       
@@ -70,56 +49,13 @@ export class ConfiguratorComponent {
         }
       });
       
-      console.log(isRuleActive);
       if (isRuleActive) {
         //filter all rules for parameter
         var valuesForParameter = rule.incompatableValues.filter(value => value.parameterId == parameter.id);
         valuesForParameter.forEach(v => disAllowed.push(v.id));
         
       }
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-      
-      // //does the rule contain values that conflict with this parameter
-      // var conflictingValuesForParameter = rule.incompatableValues.filter(e => e.parameterId == parameter.id);
-      // // console.log("disabled Options called ", parameter.name, conflictingValuesForParameter);
-      
-      // if(conflictingValuesForParameter.length > 0) {
-        
-      //   //continue if or more of theese values are selected
-      //   var notSelectedConflicts = conflictingValuesForParameter.filter(conflictingValue => {
-          
-      //     //return false if conflictingValue is in selected values
-      //     var foundConflict = this.selectedItValues.find(e => e.id == conflictingValue.id);  
-      //     //console.log("conflicts ", foundConflict, this.selectedItValues, conflictingValue.id);
-          
-      //     return foundConflict == null;
-      //   })
-        
-      //   if(notSelectedConflicts.length > 0) {
-      //     //console.log("conflicting rules", notSelectedConflicts);
-      //     //add all values tha is not selected
-      //     //console.log("not selected conflict: ",notSelectedConflicts);
-          
-      //     disAllowed.push(notSelectedConflicts);
-      //   }
-      //}
-
     });
-    
-    //return disallowed options
-    console.log("disallowed: ", disAllowed);
     
     return disAllowed;
   }  
@@ -137,8 +73,6 @@ export class ConfiguratorComponent {
 
       //Todo make seperate request
       this.rules = res.rules;
-      console.log("this is all rules: ", this.rules);
-      
       this.isLoadingResults = false;
     }, err => {
       console.log(err);
@@ -146,30 +80,3 @@ export class ConfiguratorComponent {
     });
   }
 }
-
-
-
-/*********************************** regler  *************************/
-
-/* en regel har en beskrivning*/
-// interface DisallowedRule {
-//   ObjectID: number;
-//   Name: string;
-// }
-
-// /* regeln indikerar vilken parameter som inter får väljas */
-// interface DisallowedParameter {
-//   ObjectID: number;
-//   DisallowedRuleID: number; /*(references the ObjectID of a DisallowedRule)*/
-//   ParameterID: number; /*(references the ObjectID of a Parameter)*/
-// }
-
-// /* innehåller det förbjudna värdet och vilken parameter den hör till */
-// interface DisallowedValue {
-//   ObjectID: number;
-//   DisallowedParameterID: number; /*(references the ObjectID of a DisallowedParameter)*/
-//   ParameterValueID: number; /*(references the ObjectID of a ParameterValue)*/
-// }
-
-
-

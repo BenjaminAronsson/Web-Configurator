@@ -8,8 +8,7 @@
 <p *ngIf="!product"><em>Loading...</em></p>
 
 <h4>Configuring {{product.name}}</h4>
-<p *ngFor="let item of data">{{item.name}}</p>
-
+<h6 *ngIf="product.parameters == 0">Sorry we can't find any configuration options for you</h6>
 <picker-component *ngFor="let parameter of product.parameters"  (updateParameters)="updateRules()" (selected)="onSelected($event)" [parameter]="parameter" [disabledOptions]="disabledOptions(parameter)"></picker-component>
 
 

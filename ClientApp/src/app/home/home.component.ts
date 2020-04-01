@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
   providers: [ApiService],
 })
 export class HomeComponent {
@@ -19,7 +20,6 @@ export class HomeComponent {
     this.api.getProducts()
     .subscribe(res => {
       this.products = res;
-      console.log(res);
       this.isLoadingResults = false;
     }, err => {
       console.log(err);

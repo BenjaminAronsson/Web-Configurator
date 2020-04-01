@@ -1,11 +1,10 @@
 <h1>Configuring made easy!</h1>
-<p>Welcome to your new configurator application</p>
-<h4>What do you want to configure today?</h4>
+<h3>Welcome to your new configurator application</h3>
+<h6>What do you want to configure today?</h6>
 
 <mat-list role="list">
-  <mat-list-item *ngFor="let product of products" role="item">
-    <a class="nav-link text-dark" [routerLink]="['/configurator', product.objectId]">
+  <a mat-list-item *ngFor="let product of products" role="item"
+    class="nav-link text-dark mb-3" [routerLink]="['/configurator', product.objectId]">
       {{product.name}}
     </a>
-  </mat-list-item>
 </mat-list>

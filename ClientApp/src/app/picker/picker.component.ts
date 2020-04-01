@@ -13,16 +13,9 @@ export class PickerComponent {
 
   @Output() selected = new EventEmitter<string>();
 
-  updateRules() {
-    console.log("reading rules..");
-    
-  }
-  
   isDisabled(valueId: number): boolean {
-    var test = this.disabledOptions.includes(valueId); 
-    console.log(this.parameter.name, valueId, test);
-    
-    return test;
+    var value = this.disabledOptions.includes(valueId); 
+    return value;
   }
 
   select(item: string) {

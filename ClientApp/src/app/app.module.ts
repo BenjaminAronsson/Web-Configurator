@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { ConfiguratorComponent } from './configurator/configurator.component'
 import { PickerComponent } from './picker/picker.component';
 
@@ -16,18 +15,11 @@ import { MatRadioModule } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 
-
-
-import { ApiService } from './api.service'
-import { Product } from './models/Product';
-
-
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     ConfiguratorComponent,
     PickerComponent,
   ],
@@ -42,7 +34,6 @@ import { Product } from './models/Product';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
       { path: 'configurator/:id', component: ConfiguratorComponent },
     ])
   ],
