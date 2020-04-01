@@ -29,8 +29,8 @@ export class ConfiguratorComponent {
   @Output() updateParameters = new EventEmitter();
 
   testParam: ParameterValues = {
-    parameterId: 1,
-    id: 2,
+    parameterId: 2,
+    id: 5,
     name: null
   }
 

@@ -94,7 +94,6 @@ namespace MyWebApp.Controllers
                  .ToListAsync();
                 allDisallowedRuleValues.AddRange(fetchedRuleValues);
             }
-            System.Console.WriteLine("total of {0} values", allDisallowedRuleValues.Count);
 
             //remove duplicates
             var disallowedRuleNames = allDisallowedRuleNames.Distinct().ToList();
@@ -112,7 +111,7 @@ namespace MyWebApp.Controllers
                 {
                     //get all values with param ids
                     var ruleValues = allDisallowedRuleValues.FindAll(v => v.DisallowedParameterId == param.ParameterId);
-                    System.Console.WriteLine("{0}, param {1}, have {2} values", disallowedRule.Name, param.ParameterId, ruleValues.Count);  
+                    System.Console.WriteLine("{0}, param {1}, have {2} conflicting values", disallowedRule.Name, param.ParameterId, ruleValues.Count);  
                    
                     foreach (var value in ruleValues)
                     {
@@ -121,7 +120,7 @@ namespace MyWebApp.Controllers
                             //add values
                             var valueResponse = new ParameterValueResponse{
                                 id = value.ParameterValueId,
-                                parameterId = value.ParameterValueId,
+                                parameterId = value.DisallowedParameterId,
                                 name = null
                             };
                             
@@ -141,115 +140,8 @@ namespace MyWebApp.Controllers
                 rules.Add(rule);
                 System.Console.WriteLine("");
             }
-            
-            
-
-
-
-
-
             return rules;
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-            // // fetch all rules for the used each parameter
-            // foreach (var parameterId in parameterIds)
-            // {
-            //     var fetchedParameters = await _context.DisallowedParameter
-            //         .Where(rule => rule.ParameterId == parameterId)
-            //         .ToListAsync();
-            //     disallowedParameters.AddRange(fetchedParameters);
-            // }
-         
-            // //create list of rules
-            // foreach (var param in disallowedParameters)
-            // {
-            //     if(!ruleIds.Contains(param.DisallowedRuleId)) {
-            //         ruleIds.Add(param.DisallowedRuleId);
-            //     }
-            //  }
-
-
-            // foreach (var ruleId in ruleIds)
-            // {
-            //     //foreach param
-            //     foreach (var disallowedParameter in disallowedParameters) {
-
-            //         //if param have right
-            //         if(disallowedParameter.DisallowedRuleId == ruleId) {
-
-
-            //             //needs refactoring
-            //             //fetch param value
-            //             var fetchedRuleValues = await _context.DisallowedValue
-            //                 .Where(value => value.ParameterValueId == disallowedParameter.ParameterId)
-            //                 .ToArrayAsync();
-                        
-            //             //add values
-            //             var incompatableValues = new List<ParameterValueResponse>();
-
-
-            //             //fetch name
-            //             var fetchedRuleName = await _context.DisallowedRule
-            //                 .Where(rules => rules.ObjectId == disallowedParameter.DisallowedRuleId)
-            //                 .FirstAsync();
-
-                            
-
-            //             //add values to rule
-            //             foreach (var ruleValue in fetchedRuleValues)
-            //             {
-            //                 //System.Console.WriteLine("param value: " + ruleValue.ToString() ,ruleValue.ObjectId, ruleValue.ParameterValueId, ruleValue.DisallowedParameterId);
-            //                 incompatableValues.Add( new ParameterValueResponse{
-            //                     id = ruleValue.ParameterValueId,
-            //                     parameterId = ruleValue.ParameterValueId,
-            //                     name = null,
-            //                 });
-            //             }
-
-                        
-
-                        
-            //             // incompatableValues.Add( new ParameterValueResponse{
-            //             //     id = 6,
-            //             //     parameterId = 2,
-            //             //     name = null,
-            //             // });
-
-            //             //creating rule response
-            //             var rule = new RuleResponse{
-            //                 id = disallowedParameter.ObjectId, 
-            //                 name = fetchedRuleName.Name,
-            //                 incompatableValues = incompatableValues.ToArray(),
-            //             };
-
-            //             //adding rule to list
-            //             rules.Add(rule);
-            //         }
-            //     }
-            // }
-            
-            // return rules;
         }
-
-        //async Task<RuleResponse> getRuleForParameters(parameterId) 
 
         public ProductController(ConfiguratorSampleContext context, IMapper mapper, IDataRepository<Product> repo)
         {
