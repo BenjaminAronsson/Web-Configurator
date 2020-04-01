@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, Output , EventEmitter} from '@angular/core';
 import { ApiService } from '../api.service';
 import { Product, Rule, Parameter, ParameterValues } from '../models/Product'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -22,45 +22,81 @@ export class ConfiguratorComponent {
     this.selectedItValues = temp;
 
     //update and disable options
-    console.log("Update, not implemented", value);
+    //console.log("Update, not implemented", value, this.selectedItValues);
+    this.updateParameters.emit(null)
   }
-  
-  testParamValue: ParameterValues = {
-    id: 1,
-    parameterId: 4,
+
+  @Output() updateParameters = new EventEmitter();
+
+  testParam: ParameterValues = {
+    parameterId: 1,
+    id: 2,
     name: null
-  };
+  }
 
   //update on press
-  selectedItValues: ParameterValues[] = [this.testParamValue];
+  selectedItValues: ParameterValues[] = [this.testParam];
 
   disabledOptions(parameter: Parameter): number[] {
+
+    //test
+    if (parameter.id != 2) {
+      return [];
+    }
+    // parameter = {
+    //   id: 2,
+    //   name: "Outdoors",
+    //   parameterValues: [
+    //     {
+    //       parameterId: 2,
+    //       id: 5,
+    //       name: "Yes"
+    //     },
+    //     {
+    //       parameterId: 2,
+    //       id: 6,
+    //       name: "No"
+    //     }
+    //   ]
+    // }
+
+
     //disalowed values
     var disAllowed = [];
 
+    //console.log("disabled Options called", this.rules);
+    
+
     //test all rules 
     this.rules.forEach((rule) => {  
+      //does the rule contain values that conflict with this parameter
+      var conflictingValuesForParameter = rule.incompatableValues.filter(e => e.parameterId == parameter.id);
       
-      //find disallowed value for parameter
-      rule.incompatableValues.forEach((disAlloweedValue) => {
-        //test if rule affects parameter else return 
-        if (disAlloweedValue.parameterId != parameter.id) {
-          return;
-        }
-
-        //if selected values colide with rule
-        var IsColiding = this.selectedItValues.find(e => e.parameterId == disAlloweedValue.parameterId && e.id != disAlloweedValue.id); 
+      if(conflictingValuesForParameter.length > 0) {
         
-        if (IsColiding) {
-          //add to disallowed parameter values
-          disAllowed.push(disAlloweedValue.id);
-          console.log("dissallowed values for" + parameter.name, disAlloweedValue.id);
+        //continue if or more of theese values are selected
+        var notSelectedConflicts = conflictingValuesForParameter.filter(conflictingValue => {
+          
+          //return false if conflictingValue is in selected values
+          var foundConflict = this.selectedItValues.find(e => e.id == conflictingValue.id);  
+          console.log("conflicts ", foundConflict, this.selectedItValues, conflictingValue.id);
+          
+          return foundConflict == null;
+        })
+        
+        if(notSelectedConflicts.length > 0) {
+          console.log("conflicting rules", notSelectedConflicts);
+          //add all values tha is not selected
+          //console.log("not selected conflict: ",notSelectedConflicts);
+          
+          disAllowed.push(notSelectedConflicts);
         }
-      }) 
+      }
+
     })
     
     //return disallowed options
-    //console.log(disAllowed);
+    console.log("disallowed: ", disAllowed);
     
     return disAllowed;
   }  
@@ -78,6 +114,8 @@ export class ConfiguratorComponent {
 
       //Todo make seperate request
       this.rules = res.rules;
+      console.log("this is all rules: ", this.rules);
+      
       this.isLoadingResults = false;
     }, err => {
       console.log(err);

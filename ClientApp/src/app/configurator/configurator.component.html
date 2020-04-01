@@ -10,7 +10,7 @@
 <h4>Configuring {{product.name}}</h4>
 <p *ngFor="let item of data">{{item.name}}</p>
 
-<picker-component *ngFor="let parameter of product.parameters" (selected)="onSelected($event)" [parameter]="parameter" [disabledOptions]="disabledOptions(parameter)"></picker-component>
+<picker-component *ngFor="let parameter of product.parameters"  (updateParameters)="updateRules()" (selected)="onSelected($event)" [parameter]="parameter" [disabledOptions]="disabledOptions(parameter)"></picker-component>
 
 
 
