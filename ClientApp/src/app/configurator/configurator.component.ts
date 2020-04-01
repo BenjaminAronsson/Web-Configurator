@@ -17,9 +17,9 @@ export class ConfiguratorComponent {
   onSelected(value: ParameterValues) {
     
     //update selectedValues with valueId & parameterId
-    var temp = this.selectedItValues.filter(obj => obj.parameterId != value.parameterId);
+    var temp = this.selectedValues.filter(obj => obj.parameterId != value.parameterId);
     temp.push(value);
-    this.selectedItValues = temp;
+    this.selectedValues = temp;
 
     //update and disable options
     //console.log("Update, not implemented", value, this.selectedItValues);
@@ -29,71 +29,94 @@ export class ConfiguratorComponent {
   @Output() updateParameters = new EventEmitter();
 
   testParam: ParameterValues = {
-    parameterId: 2,
-    id: 5,
+    parameterId: 1,
+    id: 1,
     name: null
   }
 
   //update on press
-  selectedItValues: ParameterValues[] = [this.testParam];
+  selectedValues: ParameterValues[] = [];//[this.testParam];
 
   disabledOptions(parameter: Parameter): number[] {
-
+    
+    //disalowed values
+    var disAllowed: number[] = [];
+    
     //test
-    if (parameter.id != 2) {
-      return [];
-    }
-    // parameter = {
-    //   id: 2,
-    //   name: "Outdoors",
-    //   parameterValues: [
-    //     {
-    //       parameterId: 2,
-    //       id: 5,
-    //       name: "Yes"
-    //     },
-    //     {
-    //       parameterId: 2,
-    //       id: 6,
-    //       name: "No"
-    //     }
-    //   ]
+    // if(parameter.id != 1) {
+    //   return disAllowed;
     // }
 
-
-    //disalowed values
-    var disAllowed = [];
-
-    //console.log("disabled Options called", this.rules);
+    console.log(parameter.name);
     
 
+    
+    
+    
+    
+    
+    
     //test all rules 
     this.rules.forEach((rule) => {  
-      //does the rule contain values that conflict with this parameter
-      var conflictingValuesForParameter = rule.incompatableValues.filter(e => e.parameterId == parameter.id);
       
-      if(conflictingValuesForParameter.length > 0) {
-        
-        //continue if or more of theese values are selected
-        var notSelectedConflicts = conflictingValuesForParameter.filter(conflictingValue => {
-          
-          //return false if conflictingValue is in selected values
-          var foundConflict = this.selectedItValues.find(e => e.id == conflictingValue.id);  
-          console.log("conflicts ", foundConflict, this.selectedItValues, conflictingValue.id);
-          
-          return foundConflict == null;
-        })
-        
-        if(notSelectedConflicts.length > 0) {
-          console.log("conflicting rules", notSelectedConflicts);
-          //add all values tha is not selected
-          //console.log("not selected conflict: ",notSelectedConflicts);
-          
-          disAllowed.push(notSelectedConflicts);
+      //isRuleActive
+      var isRuleActive = false;
+      
+      this.selectedValues.forEach(value => {
+        var selectedIncompatableValue = rule.incompatableValues.find(v => v.id == value.id);
+        if (selectedIncompatableValue && selectedIncompatableValue.parameterId != parameter.id) {
+          isRuleActive = true;
+          //break;
         }
+      });
+      
+      console.log(isRuleActive);
+      if (isRuleActive) {
+        //filter all rules for parameter
+        var valuesForParameter = rule.incompatableValues.filter(value => value.parameterId == parameter.id);
+        valuesForParameter.forEach(v => disAllowed.push(v.id));
+        
       }
+      
+      
 
-    })
+
+
+
+
+
+
+
+
+
+
+      
+      // //does the rule contain values that conflict with this parameter
+      // var conflictingValuesForParameter = rule.incompatableValues.filter(e => e.parameterId == parameter.id);
+      // // console.log("disabled Options called ", parameter.name, conflictingValuesForParameter);
+      
+      // if(conflictingValuesForParameter.length > 0) {
+        
+      //   //continue if or more of theese values are selected
+      //   var notSelectedConflicts = conflictingValuesForParameter.filter(conflictingValue => {
+          
+      //     //return false if conflictingValue is in selected values
+      //     var foundConflict = this.selectedItValues.find(e => e.id == conflictingValue.id);  
+      //     //console.log("conflicts ", foundConflict, this.selectedItValues, conflictingValue.id);
+          
+      //     return foundConflict == null;
+      //   })
+        
+      //   if(notSelectedConflicts.length > 0) {
+      //     //console.log("conflicting rules", notSelectedConflicts);
+      //     //add all values tha is not selected
+      //     //console.log("not selected conflict: ",notSelectedConflicts);
+          
+      //     disAllowed.push(notSelectedConflicts);
+      //   }
+      //}
+
+    });
     
     //return disallowed options
     console.log("disallowed: ", disAllowed);

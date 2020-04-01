@@ -9,10 +9,6 @@ import { Parameter, ParameterValues } from '../models/Product'
 export class PickerComponent {
 
   @Input() parameter: Parameter;
-
-
-  @Input() choices: string[];
-  @Input() parameterValue: ParameterValues;
   @Input() disabledOptions: number[] = []; 
 
   @Output() selected = new EventEmitter<string>();
@@ -23,7 +19,10 @@ export class PickerComponent {
   }
   
   isDisabled(valueId: number): boolean {
-    return this.disabledOptions.includes(valueId);
+    var test = this.disabledOptions.includes(valueId); 
+    console.log(this.parameter.name, valueId, test);
+    
+    return test;
   }
 
   select(item: string) {
